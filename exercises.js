@@ -158,13 +158,13 @@ const shuffle = function (arr) {
 // Write a JavaScript function to find the unique elements from two arrays.
 // Input  : [1, 2, 3, 10], [100, 2, 1, 10]
 // Output : ['3', '100']
-const unique = (arr1, arr2) => [...new Set([...arr1,...arr2])].filter(el => !(arr1.includes(el) && arr2.includes(el))) // set for optimization
+const unique = (arr1, arr2) => [...new Set([...arr1, ...arr2])].filter(el => !(arr1.includes(el) && arr2.includes(el))) // set for optimization
 
 // version 2 - reduce practice
-	// [...new Set([...arr1, ...arr2])].reduce(
-	// 	(acc, current) => (arr1.includes(current) && arr2.includes(current) ? acc : [...acc, current]),
-	// 	[]
-	// )
+// [...new Set([...arr1, ...arr2])].reduce(
+// 	(acc, current) => (arr1.includes(current) && arr2.includes(current) ? acc : [...acc, current]),
+// 	[]
+// )
 
 // exercise 15
 // Write a JavaScript function that accepts a string as a parameter and counts the number of vowels within the string.
@@ -225,12 +225,46 @@ const numberIsPrime = function (num) {
 	return num > 1
 }
 // exercise 21
-// Odtworzyc dzialanie reduce bez uzycia reduce. 
+// Odtworzyc dzialanie reduce bez uzycia reduce.
 function reduceFromScratch(arr, callback, initialValue) {
-    let value = initialValue;
-    arr.forEach((arrVal, arrIndex) => {
-        value = callback(value, arrVal, arrIndex);
-    });
-    return value;
+	let value = initialValue
+	arr.forEach((arrVal, arrIndex) => {
+		value = callback(value, arrVal, arrIndex)
+	})
+	return value
 }
 // console.log(reduceFromScratch([1,2,3],(acc,curr)=>acc+curr,10))
+
+//exercise 22
+// You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
+// On each day, you may decide to buy and/or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.
+// Find and return the maximum profit you can achieve.
+var maxProfit = function (prices) {
+	return prices.reduce((acc, curr, index) => (curr < prices[index + 1] ? (acc += prices[index + 1] - curr) : acc), 0)
+}
+
+//exercise 23
+// To be a senior, a member must be at least 55 years old  and have a handicap greater than 7
+// input: [[1,2],[56,1],[56,13]]
+// output: ['Open', 'Open', 'Senior']
+const openOrSenior = data => {
+	return data.map(arr => (arr[0] >= 55 && arr[1] > 7 ? 'Senior' : 'Open'))
+}
+
+//exercise 24
+const clearTextFromWUB = str => {
+	return str.replace(/(WUB)+/g, ' ').trim()
+}
+
+//exercise 25
+const minAndMaxFromString = str => {
+	const arr = str.split(' ').sort((a, b) => a - b)
+	return `${arr[0]} ${arr[arr.length - 1]}`
+}
+
+//exercise 26
+// create a function that masks a string of characters with # except for the last four (4) characters
+const maskString = str => {
+	return str.slice(-4).padStart(str.length-1, '#')
+}
+
